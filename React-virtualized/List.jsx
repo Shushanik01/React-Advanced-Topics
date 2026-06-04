@@ -21,7 +21,7 @@ const list = Array.from({ length: rowCount }).map((_, index) => {
     }
 });
 
-const cache = CellMeasurerCache({
+const cache = new CellMeasurerCache({
     fixedWidth: true,
     defaultWidth: 100
 });
@@ -35,7 +35,7 @@ function renderRow({ key, index, style, parent }) {
             parent={parent}
             columnIndex={0}
             rowIndex={index}
-        > {() => (<div style={style} className={styles.row}>
+        > {({registerChild}) => (<div style={style} className={styles.row} ref={registerChild}>
             <div className={styles.image}>
                 <img src={list[index].image} />
             </div>

@@ -1,5 +1,5 @@
 import { loremIpsum } from "lorem-ipsum";
-import { List, AutoSizer } from "react-virtualized";
+import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from "react-virtualized";
 import styles from './style.module.css'
 
 const rowCount = 5000;
@@ -7,13 +7,13 @@ const listHeight = 400;
 const rowHeight = 50;
 const rowWidth = 700;
 
-const list = Array.from({length:rowCount}).map((_, index) => {
+const list = Array.from({ length: rowCount }).map((_, index) => {
     return {
         id: index,
         name: 'Shushanik',
         image: 'http://via.placeholder.com/40',
         text: loremIpsum({
-            count: 3,
+            count: 5,
             units: 'sentences',
             sentenceLowerBound: 4,
             sentenceUpperBound: 8
@@ -35,19 +35,37 @@ function renderRow({ key, index, style }) {
     )
 };
 
-function ListApp() {
+// function ListApp() {
+//     return (
+//         <div className={styles.App}>
+//             <div className={styles.list}>
+//                 <List
+//                     width={rowWidth}
+//                     height={listHeight}
+//                     rowHeight={rowHeight}
+//                     rowRenderer={renderRow}
+//                     rowCount={list.length}
+//                     overscanRowCount={3}
+//                 />
+//             </div>
+//         </div>
+//     )
+// } export default ListApp
+
+function AutoSizerList() {
     return (
-        <div className={styles.App}>
-            <div className={styles.list}>
-                <List
-                    width={rowWidth}
-                    height={listHeight}
-                    rowHeight={rowHeight}
-                    rowRenderer={renderRow}
-                    rowCount={list.length}
-                    overscanRowCount={3}
-                />
-            </div>
+        <div className={styles.list}>
+            <AutoSizer>
+                {
+                    ({ width, height }) => (<List
+                        width={width}
+                        height={height}
+                        rowHeight={rowHeight}
+                        rowRenderer={renderRow}
+                        rowCount={list.length}
+                        overscanRowCount={3}
+                    />)}
+            </AutoSizer>
         </div>
     )
-} export default ListApp
+} export default AutoSizerList

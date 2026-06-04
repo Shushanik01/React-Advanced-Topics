@@ -21,9 +21,21 @@ const list = Array.from({ length: rowCount }).map((_, index) => {
     }
 });
 
-function renderRow({ key, index, style }) {
+const cache = CellMeasurerCache({
+    fixedWidth: true,
+    defaultWidth: 100
+});
+
+
+function renderRow({ key, index, style, parent }) {
     return (
-        <div key={key} style={style} className={styles.row}>
+        <CellMeasurer
+            key={key}
+            index={index}
+            parent={parent}
+            columnIndex={0}
+            rowIndex={index}
+        > {() => (<div style={style} className={styles.row}>
             <div className={styles.image}>
                 <img src={list[index].image} />
             </div>
@@ -31,7 +43,9 @@ function renderRow({ key, index, style }) {
                 <div>{list[index].name}</div>
                 <div>{list[index].text}</div>
             </div>
-        </div>
+        </div>)}
+
+        </CellMeasurer>
     )
 };
 
@@ -52,15 +66,18 @@ function renderRow({ key, index, style }) {
 //     )
 // } export default ListApp
 
+
+
 function AutoSizerList() {
     return (
         <div className={styles.list}>
             <AutoSizer>
                 {
                     ({ width, height }) => (<List
+                        deferredMeasurementCache={cache}
+                        rowHeight={cache.rowHeight}
                         width={width}
                         height={height}
-                        rowHeight={rowHeight}
                         rowRenderer={renderRow}
                         rowCount={list.length}
                         overscanRowCount={3}

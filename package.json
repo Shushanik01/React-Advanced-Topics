@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "lorem-ipsum": "^3.0.0",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "react-virtualized": "^9.22.6"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

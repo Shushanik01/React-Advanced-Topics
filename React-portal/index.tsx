@@ -10,7 +10,10 @@ export default function Component() {
             <button
             onClick={()=> setIsOpen(true)}
             >Open modal</button>
-            <Modal></Modal>
+            <Modal
+            open={isOpen}
+            onClose={()=> setIsOpen(false)}
+            >Fancy modal</Modal>
         </Fragment>
     )
 }

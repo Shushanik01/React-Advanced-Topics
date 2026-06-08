@@ -6,6 +6,8 @@ export default function Modal({ open, children, onClose }) {
     const portalRef = useRef(null);
 
     useEffect(()=>{
+        if (!open) return
+
         portalRef.current?.focus();
 
         const handleKeyDown = (e)=>{
@@ -19,7 +21,7 @@ export default function Modal({ open, children, onClose }) {
             document.removeEventListener('keydown', handleKeyDown)
         }
 
-    },[onClose])
+    },[open, onClose])
 
 
     if (!open) return null
@@ -27,7 +29,13 @@ export default function Modal({ open, children, onClose }) {
         return ReactDOM.createPortal(
 
 
-            <div>
+            <div 
+            ref={portalRef}
+            role="dialog"
+            aria-modal='true'
+            tabIndex={-1}
+            onClick={(e)=> e.stopPropagation()}
+            >
                 <button onClick={onClose}>Close</button>
                 {children}
             </div>,

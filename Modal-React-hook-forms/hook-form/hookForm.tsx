@@ -5,8 +5,9 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import styles from "./hookForm.module.css";
 
-function HookForm() {
+function HookForm({ onDataStored, onClose }: { onDataStored: () => void, onClose:()=> void }) {
     const [userId, setUserId] = useState<null | string>(null);
+
 
     const { register, handleSubmit } = useForm<UserData>();
 
@@ -15,19 +16,21 @@ function HookForm() {
     const sendDataToState = async (data: UserData) => {
 
         const file = (data.imageUpload as unknown as FileList)[0];
-        const toBase64 = (file:File) : Promise<string> =>
-            new Promise((resolve, reject)=>{
+        const toBase64 = (file: File): Promise<string> =>
+            new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file)
                 reader.onload = () => resolve(reader.result as string)
                 reader.onerror = reject
             });
 
-            const imageBase64 = file ? await toBase64(file) : ''
+        const imageBase64 = file ? await toBase64(file) : ''
 
         const id = crypto.randomUUID();
         dispatch(addUserData({ ...data, imageUpload: imageBase64, id }));
         setUserId(id);
+        onDataStored();
+        onClose()
     };
 
     return (

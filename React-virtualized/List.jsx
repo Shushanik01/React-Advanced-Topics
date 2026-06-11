@@ -36,16 +36,16 @@ function renderRow({ key, index, style, parent }) {
             parent={parent}
             columnIndex={0}
             rowIndex={index}
-        > {({registerChild}) => (<div style={style} className={styles.row} ref={registerChild}>
-            <div className={styles.image}>
-                <img src={list[index].image} />
-            </div>
-            <div className={styles.content}>
-                <div>{list[index].name}</div>
-                <div>{list[index].text}</div>
-            </div>
-        </div>)}
-
+        >
+            {({registerChild}) => (<div style={style} className={styles.row} ref={registerChild}>
+                <div className={styles.image}>
+                    <img src={list[index].image} />
+                </div>
+                <div className={styles.content}>
+                    <div>{list[index].name}</div>
+                    <div>{list[index].text}</div>
+                </div>
+            </div>)}
         </CellMeasurer>
     )
 };

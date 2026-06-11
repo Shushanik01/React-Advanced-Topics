@@ -30,6 +30,7 @@ const cache = new CellMeasurerCache({
 function renderRow({ key, index, style, parent }) {
     return (
         <CellMeasurer
+            cache={cache}
             key={key}
             index={index}
             parent={parent}
